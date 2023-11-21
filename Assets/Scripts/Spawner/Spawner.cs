@@ -1,6 +1,7 @@
 using UnityEngine;
-using System.Collections.Generic;
 using UnityEngine.Pool;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 public class Spawner : MonoBehaviour
@@ -30,9 +31,9 @@ public class Spawner : MonoBehaviour
         CreatePools();
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        TrySpawn();
+        StartCoroutine(Spawn());
     }
 
     private void CreatePools()
@@ -79,12 +80,16 @@ public class Spawner : MonoBehaviour
         Destroy(poolableObject.gameObject);
     }
 
-    private void TrySpawn()
+    private IEnumerator Spawn()
     {
-        _elapsedTime += Time.deltaTime;
-
-        if (_elapsedTime >= _timeBetweenSpawns)
+        while (enabled)
         {
+            while (_elapsedTime < _timeBetweenSpawns)
+            {
+                _elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
             var randomPool = GetRandomPool();
             randomPool.Get();
 
@@ -109,5 +114,6 @@ public class Spawner : MonoBehaviour
         _recentlyUsedSpawnPoints.Enqueue(spawnPoint);
     }
 
-    private ObjectPool<Poolable> GetRandomPool() => _pools.ElementAt(Random.Range(0, _pools.Count)).Value;
+    private ObjectPool<Poolable> GetRandomPool()
+        => _pools.ElementAt(Random.Range(0, _pools.Count)).Value;
 }

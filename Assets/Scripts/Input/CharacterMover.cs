@@ -42,12 +42,14 @@ public class CharacterMover : MonoBehaviour
 
     protected virtual void Accelerate()
     {
-        _targetVelocity = Vector2.MoveTowards(_targetVelocity, _moveInput * _moveSpeed, _acceleration * Time.deltaTime);
+        _targetVelocity = Vector2.MoveTowards(
+            _targetVelocity, _moveInput * _moveSpeed, _acceleration * Time.deltaTime);
     }
 
     protected virtual void Decelerate()
     {
-        _targetVelocity = Vector2.MoveTowards(_targetVelocity, Vector2.zero, _deceleration * Time.deltaTime);
+        _targetVelocity = Vector2.MoveTowards(
+            _targetVelocity, Vector2.zero, _deceleration * Time.deltaTime);
     }
 
     protected virtual void Move()

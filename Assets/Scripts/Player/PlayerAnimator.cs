@@ -7,6 +7,9 @@ public class PlayerAnimator : MonoBehaviour
 
     private Animator _animator;
 
+    private int _isMoving = Animator.StringToHash("isMoving");
+    private int _damaged = Animator.StringToHash("damaged");
+
     private void Awake()
     {
         _animator = GetComponent<Animator>();
@@ -14,11 +17,11 @@ public class PlayerAnimator : MonoBehaviour
 
     private void Update()
     {
-        _animator.SetBool("isMoving", _inputSource.HasMoveInput);
+        _animator.SetBool(_isMoving, _inputSource.HasMoveInput);
     }
 
     public void TakeDamage()
     {
-        _animator.SetTrigger("damaged");
+        _animator.SetTrigger(_damaged);
     }
 }
