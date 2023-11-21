@@ -30,6 +30,11 @@ public class Spawner : MonoBehaviour
         CreatePools();
     }
 
+    private void Update()
+    {
+        TrySpawn();
+    }
+
     private void CreatePools()
     {
         foreach (Poolable prefab in _prefabs)
@@ -50,11 +55,6 @@ public class Spawner : MonoBehaviour
 
             _pools.Add(prefab.name, pool);
         }
-    }
-
-    private void Update()
-    {
-        TrySpawn();
     }
 
     private void OnTakeFromPool(Poolable poolableObject)
